@@ -1,31 +1,27 @@
-package ArraysExercises;
+package ArraysExercise;
 
 import java.util.Scanner;
 
 public class ArrayRotation {
     public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
-        String[] strNumbers = scan.nextLine().split(" ");
+        String[] input = scanner.nextLine().split(" ");
+        int rotation = Integer.parseInt(scanner.nextLine());
 
-        int rotation = Integer.parseInt(scan.nextLine());
+        rotation = rotation % input.length;
 
-        rotation = rotation % strNumbers.length;
+        for (int i = 0; i < rotation ; i++) {
 
-        for (int i = 0; i < rotation; i++) {
+            String element = input[0];
 
-            String element = strNumbers[0];
-
-            for (int j = 0; j < strNumbers.length - 1; j++) {  // въртин цикала до length - 1  защото последния няма с какво да го заменим
-                strNumbers[j] = strNumbers[j + 1];
-
+            for (int j = 0; j < input.length-1 ; j++) {
+                input[j] = input[j + 1];
             }
-            strNumbers[strNumbers.length - 1] = element; // на последния индекс от колекцията всеми запазания от нулевия елемент и го запиши на последна позиция
+            input[input.length-1] = element;
         }
-        for (String s : strNumbers) {
+        for (String s : input) {
             System.out.print(s + " ");
         }
-
     }
-
 }

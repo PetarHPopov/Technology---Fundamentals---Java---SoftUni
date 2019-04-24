@@ -1,41 +1,36 @@
-package ArraysExercises;
+package ArraysExercise;
 
 import java.util.Scanner;
 
 public class EqualSums {
     public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
-        String[] number = scan.nextLine().split(" ");
+        String[] input = scanner.nextLine().split(" ");
+        int[] numbers = new int[input.length];
 
-        int[] num = new int[number.length];
-
-        for (int i = 0; i < num.length; i++) {
-            num[i] = Integer.parseInt(number[i]);
+        for (int i = 0; i < input.length; i++) {
+            numbers[i] = Integer.parseInt(input[i]);
         }
+        int index = 0;
 
-        boolean isValid = false;
-
-        for (int i = 0; i < num.length; i++) {
+        for (int i = 0; i < numbers.length; i++) {
             int leftSum = 0;
-            int rightSum = 0;
+            int rigthSum = 0;
 
-            for (int j = i - 1; j >= 0; j--) {
-                leftSum += num[j];
+            for (int j = 0; j < i; j++) {
+                leftSum += numbers[j];
             }
-            for (int j = i + 1; j < num.length; j++) {
-                rightSum += num[j];
+            for (int j = i + 1; j < numbers.length; j++) {
+                rigthSum += numbers[j];
             }
 
-            if (leftSum == rightSum) {
+            if (leftSum == rigthSum) {
                 System.out.println(i);
-                isValid = true;
-                break;
+               return;
             }
         }
-        if (!isValid){
-            System.out.println("no");
-        }
+        System.out.println("no");
     }
-
 }
+

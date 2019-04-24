@@ -1,30 +1,27 @@
-package ArraysExercises;
+package ArraysExercise;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Train {
     public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
-        int n = Integer.parseInt(scan.nextLine());
+        int n = Integer.parseInt(scanner.nextLine());
 
-        int[] wagon = new int[n];
-        int sumPassengers = 0;
+        int[] number = new int[n];
 
-        for (int i = 0; i < wagon.length; i++) {
-            int passengers = Integer.parseInt(scan.nextLine());
-            wagon[i] += passengers;
-            sumPassengers+=wagon[i];
+        for (int i = 0; i < n; i++) {
+
+            int num = Integer.parseInt(scanner.nextLine());
+
+            number[i] = num;
         }
-        for (int passenger : wagon) {     // така само обхоьдаме масива ,това е същото като с for цимъл но s for може да ги променяме а с това само ги обхождаме
-            System.out.print(passenger + " ");
+        for (int i : number) {
+            System.out.print(i + " ");
         }
-//        for (int i = 0; i <wagon.length ; i++) {
-//
-//            System.out.print(wagon[i] + " ");
-//        }
         System.out.println();
-        System.out.println(sumPassengers);
+        System.out.println(Arrays.stream(number).sum());
     }
-
 }

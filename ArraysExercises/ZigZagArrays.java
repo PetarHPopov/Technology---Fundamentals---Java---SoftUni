@@ -1,35 +1,28 @@
-package ArraysExercises;
+package ArraysExercise;
 
 import java.util.Scanner;
 
 public class ZigZagArrays {
     public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
-        int lineCount = Integer.parseInt(scan.nextLine());
+        int n = Integer.parseInt(scanner.nextLine());
 
-        int[] first = new int[lineCount];           // може и да са стрингове защото ние с тези числа не правим сметки ние ги записваме и отпечатваме само
-        int[] second = new int[lineCount];
+        String[] furst = new String[n];
+        String[] second = new String[n];
 
-        for (int i = 0; i < lineCount; i++) {
-            String[] numbers = scan.nextLine().split(" ");
+        for (int i = 0; i < n; i++) {
+            String[] tokens = scanner.nextLine().split(" ");
+
             if (i % 2 == 0) {
-                first[i] =Integer.parseInt(numbers[0]);
-                second[i] = Integer.parseInt(numbers[1]);
-            }else {
-                first[i] =Integer.parseInt(numbers[1]);
-                second[i] = Integer.parseInt(numbers[0]);
+                furst[i] = tokens[0];
+                second[i] = tokens[1];
+            } else {
+                furst[i] = tokens[1];
+                second[i] = tokens[0];
             }
-
         }
-        for (int numbers : first) {
-            System.out.print(numbers + " ");
-        }
-        System.out.println();
-        for (int numbers : second) {
-            System.out.print(numbers + " ");
-        }
-
+        System.out.println(String.join(" ", furst));
+        System.out.println(String.join(" ", second));
     }
-
 }
