@@ -1,4 +1,4 @@
-package Lists_Lab;
+package ListsArraysAdvanced;
 
 import java.util.Arrays;
 import java.util.List;
@@ -7,52 +7,71 @@ import java.util.stream.Collectors;
 
 public class ListManipulationAdvanced {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        List<Integer> numbers = Arrays.stream(scanner.nextLine()
-                .split("\\s+"))
+        Scanner scan = new Scanner(System.in);
+
+        List<Integer> nums = Arrays.stream(scan.nextLine().split(" "))
                 .map(Integer::parseInt)
                 .collect(Collectors.toList());
 
-        String line = scanner.nextLine();
+        String line = scan.nextLine();
 
         while (!"end".equals(line)) {
-            String[] tokens = line.split("\\s+");
-            String comand = tokens[0];
-            if (comand.equals("Contains")) {
-                int num = Integer.parseInt(tokens[1]);
-                if (numbers.contains(num)) {
-                    System.out.print("Yes");
-                } else {
-                    System.out.print("No such number");
-                }
-            }else if (comand.equals("Print")){
-                String cmd = tokens[1];
-                if (cmd.equals("even")){
-                    numbers.stream().filter(e -> e % 2 == 0).forEach(e -> System.out.print(e + " "));
-                }else {
 
-                    numbers.stream().filter(e -> e % 2 != 0).forEach(e -> System.out.print(e + " "));
-                }
-            }else if (comand.equals("Get")) {
-                numbers.stream().reduce((sum, num) -> sum + num).ifPresent(System.out::print);
-            }else if (comand.equals("Filter")){
-                String condition = tokens[1];
-                if (condition.equals("<")) {
-                    int num = Integer.parseInt(tokens[2]);
-                    numbers.stream().filter(entry -> entry < num).forEach(e -> System.out.print(e + " "));
-                }else if (condition.equals(">")){
-                    int num = Integer.parseInt(tokens[2]);
-                    numbers.stream().filter(entry -> entry > num).forEach(e -> System.out.print(e + " "));
-                }else if (condition.equals(">=")) {
-                    int num = Integer.parseInt(tokens[2]);
-                    numbers.stream().filter(entry -> entry >= num).forEach(e -> System.out.print(e + " "));
-                }else if (condition.equals("<=")) {
-                    int num = Integer.parseInt(tokens[2]);
-                    numbers.stream().filter(entry -> entry <= num).forEach(e -> System.out.print(e + " "));
-                }
+            String[] tokens = line.split(" ");
+            String cmd = tokens[0];
+
+            switch (cmd) {
+                case "Contains":
+
+                    int element = Integer.parseInt(tokens[1]);
+
+                    if (nums.contains(element)) {
+                        System.out.print("Yes");
+                    } else {
+                        System.out.print("No such number");
+                    }
+                    break;
+                case "Print":
+
+                    String parity = tokens[1];
+
+                    if (parity.equals("even")) {
+                        nums.stream().filter(n -> n % 2 == 0).forEach(e -> System.out.print(e + " "));
+
+                    } else {
+                        nums.stream().filter(n -> n % 2 != 0).forEach(e -> System.out.print(e + " "));
+                    }
+                    break;
+
+                case "Get":
+                    //System.out.print(nums.stream().reduce((e1, e2) -> e1 + e2).get()); // така казваме хвани единия елемент и го събери с другия и получаваме сумата
+                    nums.stream().reduce((result, elementt) -> elementt + result)
+                            .ifPresent(System.out::print);
+                    break;
+
+                case "Filter":
+
+                    String condition = tokens[1];
+                    int number = Integer.parseInt(tokens[2]);
+
+                    if (condition.equals("<")) {
+                        nums.stream().filter(e -> e < number).forEach(e -> System.out.print(e + " "));
+                    } else if (condition.equals(">")) {
+                        nums.stream().filter(e -> e > number).forEach(e -> System.out.print(e + " "));
+                    } else if (condition.equals(">=")) {
+                        nums.stream().filter(e -> e >= number).forEach(e -> System.out.print(e + " "));
+                    } else if (condition.equals("<=")) {
+                        nums.stream().filter(e -> e <= number).forEach(e -> System.out.print(e + " "));
+                    }
+
+                    break;
+                default:
+                    break;
             }
-            line = scanner.nextLine();
             System.out.println();
+            line = scan.nextLine();
         }
+
     }
+
 }
