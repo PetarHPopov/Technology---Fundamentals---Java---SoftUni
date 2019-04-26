@@ -4,40 +4,41 @@ import java.util.Scanner;
 
 public class PasswordValidator {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scan = new Scanner(System.in);
 
-        String pass = scanner.nextLine();
-
-        if (validatePassword(pass)){
+        String password = scan.nextLine();
+        if (validatePassword(password)) {
             System.out.println("Password is valid");
         }
+
     }
 
-   private static boolean validatePassword(String pass) {
-       boolean correctCharCount = validateCount(pass);
-       boolean onlyLettersAndDigits = validateContain(pass);
-       boolean haveToDigits = validateDigitsCount(pass);
+    public static boolean validatePassword(String pass) {
 
-       return correctCharCount && onlyLettersAndDigits && haveToDigits;
+        boolean correctCharCount = validateCount(pass);
+        boolean onlyLettersAndDigits = validateContain(pass);
+        boolean haveToDigits = validateDigitsCount(pass);
+
+        return correctCharCount && onlyLettersAndDigits && haveToDigits;
     }
 
     private static boolean validateDigitsCount(String pass) {
 
-        int countDigits = 0;
+        int digitCount = 0;
+
         for (int i = 0; i < pass.length(); i++) {
             char symbol = pass.charAt(i);
             if (Character.isDigit(symbol)) {
-                countDigits++;
-                if (countDigits >= 2) {
+                digitCount++;
+                if (digitCount >= 2) {
                     return true;
                 }
             }
+
         }
         System.out.println("Password must have at least 2 digits");
         return false;
-
     }
-
 
     private static boolean validateContain(String pass) {
 
@@ -52,6 +53,7 @@ public class PasswordValidator {
         }
         return true;
     }
+
 
     private static boolean validateCount(String pass) {
         boolean isValid = pass.length() > 5 && pass.length() < 11;

@@ -4,22 +4,29 @@ import java.util.Scanner;
 
 public class MiddleCharacters {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scan = new Scanner(System.in);
 
-        String text = scanner.nextLine();
-        System.out.println(printMiddleCharacters(text));
+        String str = scan.nextLine();
+
+        String result = getMidleChars(str);
+
+        System.out.println(result);
+
     }
 
-    private static String printMiddleCharacters(String text) {
-        String line = "";
+    public static String getMidleChars(String str) {
 
-        int index = text.length() / 2;
-        if (text.length() % 2 == 0) {
-            line += text.charAt(index - 1);
-            line += text.charAt(index);
+        String result = "";
+
+        int middleIndex = str.length() / 2; // така взимаме този коийто е в средата
+
+        if (str.length() % 2 == 0) {
+            result += str.charAt(middleIndex - 1);   // така когато е 3245  и 4 / 2 трябва да вземем 2 средни на индекс 2 е 4 и така 2-1 = индекс 1 и така взимаме и 2-двойката
+            result += str.charAt(middleIndex);
         } else {
-            line += text.charAt(index);
+            result += str.charAt(middleIndex);
         }
-        return line;
+        return result;
     }
+
 }

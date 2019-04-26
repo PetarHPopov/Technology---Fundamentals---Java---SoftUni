@@ -4,34 +4,25 @@ import java.util.Scanner;
 
 public class TopNumber {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scan = new Scanner(System.in);
 
-        int number = Integer.parseInt(scanner.nextLine());
-        printTopNumbers(number);
+        int number = Integer.parseInt(scan.nextLine());
+
+        topNumber(number);
 
     }
 
-    private static void printTopNumbers(int n) {
+    private static void topNumber(int number) {
 
-        for (int i = 1; i <= n; i++) {
+        for (int i = 1; i <= number; i++) {
+            int digitsOne = i % 10;
+            int digitsTho = i / 10;
 
-            int num = i;
-            int sum = 0;
-            int digit = 0;
-            boolean isValid = false;
-            while (num > 0) {
-                digit = num % 10;
-                sum += digit;
-                if (digit %2 != 0){
-                    isValid = true;
-                }
-                num /= 10;
-            }
+            int sum = digitsOne + digitsTho;
 
-            if (sum % 8 == 0 && isValid) {
+            if (sum % 8 == 0 && i % 2 != 0) {
                 System.out.println(i);
             }
         }
-
     }
 }

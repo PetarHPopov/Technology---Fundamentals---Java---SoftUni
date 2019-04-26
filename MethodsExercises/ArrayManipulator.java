@@ -5,188 +5,204 @@ import java.util.Scanner;
 
 public class ArrayManipulator {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scan = new Scanner(System.in);
 
-        String[] inputData = scanner.nextLine().split("\\s+");
+        int[] numbers = Arrays.stream(scan.nextLine()
+                .split(" "))
+                .mapToInt(Integer::parseInt)
+                .toArray();
+        String command = scan.nextLine();
 
-        int[] numbers = new int[inputData.length];
+        while (!command.equals("end")) {
 
-        for (int i = 0; i < inputData.length; i++) {
-            numbers[i] = Integer.parseInt(inputData[i]);
-        }
+            String[] cmdArgs = command.split(" ");
 
-        String input = "";
-
-        while (!"end".equals(input = scanner.nextLine())){
-            String[] data = input.split("\\s+");
-
-            String command = data[0];
-
-            switch (command){
-                case "exchange":
-                    exchangeArray(numbers, Integer.parseInt(data[1]));
-                    break;
-                case "min":
-                    minElementIndex(numbers, data[1]);
-                    break;
-                case "max":
-                    maxElementIndex(numbers, data[1]);
-                    break;
-                case "first":
-                    firstCountElements(numbers, Integer.parseInt(data[1]), data[2]);
-                    break;
-                case "last":
-                    lastCountElements(numbers, Integer.parseInt(data[1]), data[2]);
-                    break;
-            }
-
-        }
-
-        System.out.println(Arrays.toString(numbers));
-    }
-
-    private static void lastCountElements(int[] numbers, int count, String command) {
-        if (validateCount(numbers, count)) return;
-
-        int num = command.equals("even") ? 0 : 1;
-        int index = 0;
-        fillElementsByCriteria(numbers, count, num, index, "last");
-
-
-    }
-
-    private static void firstCountElements(int[] numbers, int count, String command) {
-        if (validateCount(numbers, count)) return;
-
-        int num = command.equals("even") ? 0 : 1;
-
-        int index = 0;
-        fillElementsByCriteria(numbers, count, num, index, "first");
-
-
-    }
-
-    private static boolean validateCount(int[] numbers, int count) {
-        if(count < 0 || count > numbers.length){
-            System.out.println("Invalid count");
-            return true;
-        }
-        return false;
-    }
-
-    private static void fillElementsByCriteria(int[] numbers, int count, int num, int index, String criteria) {
-        
-        int[] result = new int[0];
-
-        for (int i = 0; i < numbers.length; i++) {
-            if(numbers[i] % 2 == num){
-                if(index == result.length) {
-                    result = changeArraySize(result);
+            if (cmdArgs[0].equals("exchange")) {
+                int index = Integer.parseInt(cmdArgs[1]);
+                if (index >= 0 && index < numbers.length) {
+                    exchange(numbers, index);
+                } else {
+                    System.out.println("Invalid index");
                 }
-                result[index++] = numbers[i];
-            }
-        }
-
-        if(index == 0){
-            System.out.println("[]");
-        }else{
-            int minCount = Math.min(count, result.length);
-            String output = "[";
-
-            if(criteria.equals("first")) {
-                for (int i = 0; i < minCount; i++) {
-                    if (i < minCount - 1) {
-                        output += result[i] + ", ";
+            } else if (cmdArgs[0].equals("max")) {
+                if (cmdArgs[1].equals("even")) {
+                    int index = findMaxEvenIndex(numbers);
+                    if (index != -1) {
+                        System.out.println(index);
                     } else {
-                        output += result[i] + "]";
+                        System.out.println("No matches");
+                    }
+                } else {
+                    int index = findMaxOddIndex(numbers);
+                    if (index != -1) {
+                        System.out.println(index);
+                    } else {
+                        System.out.println("No matches");
                     }
                 }
-            }else{
-                int countElements = 0;
-                for (int i = 0; i < minCount; i++) {
-                    if (i < minCount - 1) {
-                        output += result[result.length - minCount + countElements++] + ", ";
+            } else if (cmdArgs[0].equals("min")) {
+                if (cmdArgs[1].equals("even")) {
+                    int index = findMinEvenIndex(numbers);
+                    if (index != -1) {
+                        System.out.println(index);
                     } else {
-                        output += result[result.length - minCount + countElements++] + "]";
+                        System.out.println("No matches");
+                    }
+                } else {
+                    int index = findMinOddIndex(numbers);
+                    if (index != -1) {
+                        System.out.println(index);
+                    } else {
+                        System.out.println("No matches");
                     }
                 }
+            } else if (cmdArgs[0].equals("first")) {
+                int count = Integer.parseInt(cmdArgs[1]);
+                if (cmdArgs[2].equals("even")) {
+                    if (count < numbers.length) {
+                        printFirstEven(numbers, count);
+                    } else {
+                        System.out.println("Invalid count");
+                    }
+                } else {
+                    int countOdd = Integer.parseInt(cmdArgs[1]);
+                        if (countOdd < numbers.length) {
+                            printFirstOdd(numbers, count);
+                        } else {
+                            System.out.println("Invalid count");
+                        }
+                    }
+                }
+                command = scan.nextLine();
             }
-
-            System.out.println(output);
-        }
-    }
-
-    private static int[] changeArraySize(int[] result) {
-        int[] newArray = new int[result.length + 1];
-
-        for (int i = 0; i < result.length; i++) {
-            newArray[i] = result[i];
+            printArray(numbers);
         }
 
-        return newArray;
-    }
+        private static void printFirstEven ( int[] numbers, int count){
 
-    private static void minElementIndex(int[] numbers, String command) {
-        int num = command.equals("even") ? 0 : 1;
+            int[] arr = new int[numbers.length];
 
-        int minElement = Integer.MAX_VALUE;
-        int index = -1;
-        for (int i = 0; i < numbers.length; i++) {
-            if(numbers[i] % 2 == num){
-                if(numbers[i] <= minElement){
-                    minElement = numbers[i];
+            for (int i = 0; i < numbers.length; i++) {
+                if (numbers[i] % 2 == 0 && count > 0) {
+                    count--;
+                    arr[i] = numbers[i];
+                } else {
+                    arr[i] = -1;
+                }
+            }
+            printArray(arr);
+        }
+
+        private static int findMinOddIndex ( int[] numbers){
+            int index = -1;
+
+            int minNum = Integer.MAX_VALUE;
+
+            for (int i = 0; i < numbers.length; i++) {
+
+                if (minNum >= numbers[i] && numbers[i] % 2 != 0) {
+                    minNum = numbers[i];
                     index = i;
                 }
             }
+            return index;
         }
 
-        if(index == -1){
-            System.out.println("No matches");
-        }else{
-            System.out.println(index);
-        }
-    }
+        private static int findMinEvenIndex ( int[] numbers){
+            int index = -1;
 
-    private static void maxElementIndex(int[] numbers, String command) {
-        int num = command.equals("even") ? 0 : 1;
+            int minNum = Integer.MAX_VALUE;
 
-        int maxElement = Integer.MIN_VALUE;
-        int index = -1;
-        for (int i = 0; i < numbers.length; i++) {
-            if(numbers[i] % 2 == num){
-                if(numbers[i] >= maxElement){
-                    maxElement = numbers[i];
+            for (int i = 0; i < numbers.length; i++) {
+
+                if (minNum >= numbers[i] && numbers[i] % 2 == 0) {
+                    minNum = numbers[i];
                     index = i;
                 }
             }
+            return index;
         }
 
-        if(index == -1){
-            System.out.println("No matches");
-        }else{
-            System.out.println(index);
-        }
-    }
+        private static int findMaxOddIndex ( int[] numbers){
+            int index = -1;
 
-    private static void exchangeArray(int[] numbers, int index){
-        if(index < 0 || index >= numbers.length){
-            System.out.println("Invalid index");
-            return;
-        }
+            int maxNum = Integer.MIN_VALUE;
 
-        int count = 0;
-        int[] result = new int[numbers.length];
-
-        for (int i = index + 1; i < numbers.length; i++) {
-            result[count++] = numbers[i];
+            for (int i = 0; i < numbers.length; i++) {
+                if (maxNum <= numbers[i] && numbers[i] % 2 != 0) {
+                    maxNum = numbers[i];
+                    index = i;
+                }
+            }
+            return index;
         }
 
-        for (int i = 0; i <= index; i++) {
-            result[count++] = numbers[i];
+        private static int findMaxEvenIndex ( int[] numbers){
+            int index = -1;
+
+            int maxNum = Integer.MIN_VALUE;
+
+            for (int i = 0; i < numbers.length; i++) {
+
+                if (maxNum <= numbers[i] && numbers[i] % 2 == 0) {
+                    maxNum = numbers[i];
+                    index = i;
+                }
+            }
+            return index;
         }
+
+        private static void printArray ( int[] numbers){
+
+            System.out.print("[");
+            boolean printFirst = true;
+
+            for (int i = 0; i < numbers.length; i++) {
+                if (numbers[i] != -1) {
+                    if (printFirst) {
+                        System.out.print(numbers[i]);
+                        printFirst = false;
+                    } else {
+                        System.out.print(", " + numbers[i]);
+                    }
+                }
+            }
+            System.out.println("]");
+        }
+
+        private static void exchange ( int[] numbers, int index){
+            int[] first = new int[index + 1];
+            int[] second = new int[numbers.length - (index + 1)];
+
+            for (int i = 0; i <= index; i++) {
+                first[i] = numbers[i];
+            }
+            for (int i = index + 1; i < numbers.length; i++) {
+                second[i - (index + 1)] = numbers[i];
+            }
+            for (int i = 0; i < second.length; i++) {
+                numbers[i] = second[i];
+            }
+            for (int i = 0; i < first.length; i++) {
+                numbers[i + second.length] = first[i];
+            }
+
+        }
+
+
+
+    private static void printFirstOdd(int[] numbers, int count) {
+        int[] arr = new int[numbers.length];
 
         for (int i = 0; i < numbers.length; i++) {
-            numbers[i] = result[i];
+            if (numbers[i] % 2 != 0 && count > 0) {
+                count--;
+                arr[i] = numbers[i];
+            } else {
+                arr[i] = -1;
+            }
         }
+        printArray(arr);
     }
+
 }

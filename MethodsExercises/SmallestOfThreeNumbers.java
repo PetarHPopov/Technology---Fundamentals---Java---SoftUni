@@ -4,13 +4,17 @@ import java.util.Scanner;
 
 public class SmallestOfThreeNumbers {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        int a = Integer.parseInt(scanner.nextLine());
-        int b = Integer.parseInt(scanner.nextLine());
-        int c = Integer.parseInt(scanner.nextLine());
-        System.out.println(getSmallestNumber(a, b, c));
+        Scanner scan = new Scanner(System.in);
+
+        int firsNumber = Integer.parseInt(scan.nextLine());
+        int secondNumber = Integer.parseInt(scan.nextLine());
+        int thirdNumber = Integer.parseInt(scan.nextLine());
+        System.out.println(minNumber(firsNumber, secondNumber, thirdNumber));
     }
-    static int getSmallestNumber(int a, int b, int c){
-        return Math.min(Math.min(a,b),c);
+
+    public static Integer minNumber(int f, int s, int t) {
+        int minNumber = Math.min(Math.min(f, s), t);
+        return minNumber;
     }
+
 }

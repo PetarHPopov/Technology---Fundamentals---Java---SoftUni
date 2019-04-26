@@ -4,25 +4,29 @@ import java.util.Scanner;
 
 public class CharactersInRange {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        char begin = scanner.nextLine().charAt(0);
-        char end = scanner.nextLine().charAt(0);
+        Scanner scan = new Scanner(System.in);
 
-        characterInRange(begin, end);
-    }
+        char begin = scan.nextLine().charAt(0);     // четем ги в обратен ред последния тест  когато begin > end
+        char end = scan.nextLine().charAt(0);
 
-    static void characterInRange(char begin, char end) {
-        String text = "";
         if (begin > end) {
+
             char temp = begin;
             begin = end;
             end = temp;
-
-        }
-        for (int i = begin + 1; i < end; i++) {
-            text += (char) i + " ";
         }
 
-        System.out.println(text);
+        printAsciiInRange(begin, end);
+
     }
+
+    static void printAsciiInRange(char begin, char end) {
+
+        begin++; // за да избегнем кастването затова просто увеличаваме началото с едно
+
+        for (char symbol = begin; symbol < end; symbol++) {
+            System.out.print(symbol + " ");
+        }
+    }
+
 }

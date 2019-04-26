@@ -4,18 +4,24 @@ import java.util.Scanner;
 
 public class NxNMatrix {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        int number = Integer.parseInt(scanner.nextLine());
+        Scanner scan = new Scanner(System.in);
 
-        for (int i = 0; i < number ; i++) {
-            printNumbers(number);
+        int input = Integer.parseInt(scan.nextLine());
+
+        nMatrix(input);
+
+    }
+
+    public static void nMatrix(int input) {
+
+        for (int i = 0; i < input; i++) {
+            for (int j = 0; j < input; j++) {
+
+                System.out.print(input + " ");
+
+            }
+            System.out.println();
         }
     }
 
-    private static void printNumbers(int number) {
-        for (int j = 0; j < number ; j++) {
-            System.out.print( number + " ");
-        }
-        System.out.println();
-    }
 }

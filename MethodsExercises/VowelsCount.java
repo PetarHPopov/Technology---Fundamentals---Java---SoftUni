@@ -4,21 +4,41 @@ import java.util.Scanner;
 
 public class VowelsCount {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scan = new Scanner(System.in);
 
-        String text = scanner.nextLine().toLowerCase();
-
+        String text = scan.nextLine();
         System.out.println(vowelsCount(text));
     }
 
-    private static int vowelsCount(String text) {
-        int count = 0;
-        for (int i = 0; i < text.length(); i++) {
-            char symbol = text.charAt(i);
-            if (symbol == 'a' || symbol == 'e' || symbol == 'i' || symbol == 'o' || symbol == 'u' || symbol == 'y') {
-                count++;
+    public static Integer vowelsCount(String s) {
+        int counter = 0;
+
+        String toLowerCase = s.toLowerCase(); //правим го целия стринг да е малки букви
+
+        for (int i = 0; i <s.length() ; i++) {
+
+            switch (toLowerCase.charAt(i)){
+                case 'a':
+                    counter++;
+                    break;
+                case 'e':
+                    counter++;
+                    break;
+                case 'u':
+                    counter++;
+                    break;
+                case 'o':
+                    counter++;
+                    break;
+                case 'i':
+                    counter++;
+                    break;
             }
+
         }
-        return count;
+
+
+        return counter;
     }
+
 }

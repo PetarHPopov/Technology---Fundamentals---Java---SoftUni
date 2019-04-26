@@ -4,28 +4,37 @@ import java.util.Scanner;
 
 public class PalindromeIntegers {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scan = new Scanner(System.in);
 
-        String line = scanner.nextLine();
+        String inputNumber = scan.nextLine();
 
-        while (!"END".equals(line)){
 
-            polindromeOrNot(line);
 
-            line = scanner.nextLine();
+        while (!"END".equals(inputNumber)) {
+
+            palindromeIntegers(inputNumber);
+
+            inputNumber = scan.nextLine();
         }
+
     }
 
-    private static boolean polindromeOrNot(String line) {
-        String rev = "";
-        for (int i = line.length()-1; i >=0 ; i--) {
-            rev += line.charAt(i);
+    private static void palindromeIntegers(String inputNumber) {
+        int num = Integer.parseInt(inputNumber);
+
+        int number = num;
+        int dig = 0;
+        int rev = 0;
+
+        while (num > 0) {
+            dig = num % 10;
+            rev = rev * 10 + dig;
+            num = num / 10;
         }
-        if (line.equals(rev)){
-            System.out.println("true");
-            return true;
+        if (number == rev){
+            System.out.println(true);
+        }else {
+            System.out.println(false);
         }
-        System.out.println("false");
-        return false;
     }
 }
